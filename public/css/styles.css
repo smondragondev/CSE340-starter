@@ -1,6 +1,162 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+/* https://coolors.co/03045e-0077b6-00b4d8-90e0ef-caf0f8 */
+
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #03045E;
+  --secondary-color: #0077b6;
+  --background-color: #CAF0F8;
+  --background2-color: #90E0EF;
+  --text-color: #04164e;
+  --text2-color: #00B4D8;
+  --text3-color: #03294E;
+  --accent1-color: #005F73;
+  --accent2-color: #0A9396;
+}
+
+body {
+  min-width: 100vw;
+  overflow-x: hidden;
+  font-family: "Noto Sans", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  background-color: var(--background-color);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Noto Serif", serif;
+  font-style: normal;
+}
+
+a {
+  text-decoration: none;
+  color: var(--accent1-color);
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* Header */
+
+header {
+  column-gap: 10px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px 10px;
+}
+
+header a {
+  color: var(--primary-color);
+}
+
+header img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding-bottom: 3px;
+}
+
+header span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+#tools a{
+  font-weight: 700;
+  color: white;
+}
+
+.navigation {
+  background-color: var(--primary-color);
+  margin: 0 auto;
+}
+
+.navigation ul {
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation a {
+  display: block;
+  color: #fff;
+  text-align: start;
+  padding: 1rem;
+}
+
+.navigation a:hover {
+  text-decoration: overline;
+  color: var(--text2-color);
+}
+
+.navigation li.current {
+  text-decoration: overline;
+  color: var(--text2-color);
+}
+
+.navigation li.current a {
+  color: var(--text2-color);
+}
+
+
+/* main */
+
+main {
+  overflow-x: hidden;
+  padding: 20px 10px;
+}
+
+
+/* Footer */
+
+footer {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  padding: 10px 10px;
+}
+
+
+@media only screen and (min-width: 38rem) {
+
+  /* HEADER */
+
+  header {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  .navigation ul {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 200px;
+  }
+
+  main{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  footer {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+
 }

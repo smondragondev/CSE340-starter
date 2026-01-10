@@ -24,8 +24,9 @@ app.set("layout", "./layouts/layout"); // not at views root
 app.use(static);
 // Index route
 app.get("/", function(req,res){
-  res.render("index", {title: "Home"});
-})
+  const year = new Date().getFullYear();
+  res.render("index", {title: "Home", year:year});
+});
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
@@ -38,4 +39,4 @@ const host = process.env.HOST;
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
-})
+});

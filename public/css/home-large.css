@@ -1,0 +1,47 @@
+@media only screen and (min-width: 38rem) {
+    .hero-section{
+        height: 300px;
+    }
+    .hero-section picture {
+        position: relative;
+    }
+
+    .hero-section img{
+        display: block;
+        margin: 0 auto;
+    }
+
+    .hero-message {
+        width: 300px;
+        padding: 10px;
+        left: 300px;
+    }
+
+    .info-section{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .info-section h2{
+        margin-bottom: 30px;
+    }
+
+    .upgrades{
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+    }
+
+    .upgrade-card{
+        width: 70%;
+    }
+
+    .reviews{
+        grid-column: 2 / 2;
+    }
+
+    .reviews ul{
+        gap: 20px;
+    }
+
+}
