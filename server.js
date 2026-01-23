@@ -7,6 +7,8 @@
  *************************/
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
+const baseController = require("./controllers/baseController");
+const inventoryRoute = require("./routes/inventoryRoute");
 const env = require("dotenv").config();
 const app = express();
 const static = require("./routes/static");
@@ -23,10 +25,12 @@ app.set("layout", "./layouts/layout"); // not at views root
  *************************/
 app.use(static);
 // Index route
-app.get("/", function(req,res){
-  const year = new Date().getFullYear();
-  res.render("index", {title: "Home", year:year});
-});
+// app.get("/", function(req,res){
+//   const year = new Date().getFullYear();
+//   res.render("index", {title: "Home", year:year});
+// });
+
+app.get("/", baseController.buildHome)
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
@@ -40,3 +44,7 @@ const host = process.env.HOST;
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 });
+
+
+// Inventory Routes
+app.use("/inv",inventoryRoute);
