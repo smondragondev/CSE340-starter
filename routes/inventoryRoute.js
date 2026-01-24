@@ -6,6 +6,8 @@ const invController = require("../controllers/invController");
 router.get("/type/:classificationId", invController.buildByClassificationId);
 // Route to detail inventory
 router.get("/detail/:inventoryId", invController.buildByInventoryId);
+// Route to error
+router.get("/temporal-error", invController.generateError);
 
 
 module.exports = router;

@@ -35,4 +35,14 @@ invCont.buildByInventoryId = async function (req, res, next){
   });
 }
 
+/* ***************************
+ *  Temporal Error View
+ * ************************** */
+invCont.generateError = async function (req, res,next){
+  const error = new Error("A temporal Error!");
+  error.status = 500;
+  next(error);
+}
+
+
 module.exports = invCont

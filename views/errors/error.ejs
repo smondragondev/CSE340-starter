@@ -1,7 +1,13 @@
-<% if (title) { %>
-<h1><%= title %></h1>
-<% } else {
-  res.redirect('/')
-} %>
+<div class="error-message">
+  <% if (title) { %>
+  <h1><%= title %></h1>
+  <% } else {
+    res.redirect('/')
+  } %>
+  <h2>
+    <%- message %>
+  </h2>
+  <img src="/images/site/error-image.gif" alt="A car with a funny movement" width="400">
+</div>
 
-<%- message %>
+
