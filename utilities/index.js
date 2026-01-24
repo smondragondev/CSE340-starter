@@ -46,7 +46,7 @@ Util.buildClassificationGrid = async function(data){
       + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
       grid += '</h2>'
       grid += '<span>$' 
-      + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
+      + formatNumber(vehicle.inv_price) + '</span>'
       grid += '</div>'
       grid += '</li>'
     })
@@ -55,6 +55,55 @@ Util.buildClassificationGrid = async function(data){
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
   }
   return grid
+}
+
+/* **************************************
+* Build the detail item view HTML
+* ************************************ */
+Util.buildDetailView = async function(data) {
+  let detail;
+  if (data){
+    const title = `${data.inv_make} ${data.inv_model}`;
+    const fullImageUrl = data.inv_image;
+    const year = data.inv_year;
+    const description = data.inv_description;
+    const color = data.inv_color;
+    const price = `$ ${formatNumber(data.inv_price)}`;//Currency Dolar symbol
+    const mileage = `${formatNumber(data.inv_miles)}`;// Procer place value commas
+    detail = `
+      <div class="detail-card">
+          <div class="detail-image">
+              <img src="${fullImageUrl}">
+          </div>
+          <div class="detail-info">
+            <div class="detail-info-header">
+              <h1>${title}</h1>
+              <p>${year}</p>
+            </div>
+            <div class="detail-info-technical">
+                <ul>
+                  <li><span>Color: </span>${color}</li>
+                  <li><span>Price: </span>${price}</li>
+                  <li><span>Mileage: </span>${mileage}</li>
+                </ul>
+            </div>
+            <div class="detail-info-description">
+                <p>
+                  ${description}
+                </p>
+            </div>
+          </div>
+      </div>
+    `
+  }else{
+    detail = '<p>No detail view is available</p>';
+  }
+
+  return detail;
+}
+
+function formatNumber(number){
+  return new Intl.NumberFormat('en-US').format(number);
 }
 
 /* ****************************************
