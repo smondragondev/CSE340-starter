@@ -1,0 +1,10 @@
+@media only screen and (min-width: 38rem) {
+    #inv-display {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    #inv-display li>a {
+        height: 150px;
+    }
+}

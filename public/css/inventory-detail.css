@@ -1,0 +1,49 @@
+.detail-card img {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 90dvw;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+}
+
+.detail-info {
+    display: grid;
+    grid-template-rows: 80px auto 50px;
+}
+
+.detail-info-header-mobile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+
+
+}
+
+.detail-info-header-mobile p {
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.detail-info-header {
+    display: none;
+}
+
+.detail-info-technical {
+    grid-row: 3 / -1;
+
+}
+
+.detail-info-technical ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 0px;
+}
+
+.detail-info-technical ul span {
+    color: var(--primary-color);
+    font-weight: 700;
+}

@@ -39,7 +39,6 @@ Util.buildClassificationGrid = async function(data){
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
-      grid += '<hr />'
       grid += '<h2>'
       grid += '<a href="../../inv/detail/' + vehicle.inv_id +'" title="View ' 
       + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">' 
@@ -65,6 +64,7 @@ Util.buildDetailView = async function(data) {
   if (data){
     const title = `${data.inv_make} ${data.inv_model}`;
     const fullImageUrl = data.inv_image;
+    const altImage = `${title} on CSE Motors`
     const year = data.inv_year;
     const description = data.inv_description;
     const color = data.inv_color;
@@ -72,8 +72,12 @@ Util.buildDetailView = async function(data) {
     const mileage = `${formatNumber(data.inv_miles)}`;// Procer place value commas
     detail = `
       <div class="detail-card">
+          <div class="detail-info-header-mobile">
+              <h1>${title}</h1>
+              <p>${year}</p>
+          </div>
           <div class="detail-image">
-              <img src="${fullImageUrl}">
+              <img src="${fullImageUrl}" alt="${altImage}">
           </div>
           <div class="detail-info">
             <div class="detail-info-header">

@@ -1,0 +1,25 @@
+#inv-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+#inv-display a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#inv-display a img {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+
+
+.namePrice {
+    text-align: center;
+}
