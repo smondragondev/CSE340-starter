@@ -3,8 +3,20 @@ const pool = require("../database/")
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications(){
+async function getClassifications() {
   return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+}
+
+/* *****************************
+*   Register new classification
+* *************************** */
+async function addNewClassification(classification_name) {
+  try {
+    const sql = "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *"
+    return await pool.query(sql, [classification_name])
+  } catch (error) {
+    return error.message;
+  }
 }
 
 /* ***************************
@@ -29,19 +41,24 @@ async function getInventoryByClassificationId(classification_id) {
 Get Detail information for an element
 */
 
-async function getInventoryByInventoryID(inventory_id){
-  try{
+async function getInventoryByInventoryID(inventory_id) {
+  try {
     const data = await pool.query(
       `SELECT * FROM public.inventory
       WHERE inv_id = $1`,
       [inventory_id]
     )
     return data.rows[0]
-  }catch (error){
+  } catch (error) {
     console.log("getInventoryByInventoryID error " + error);
   }
 }
 
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryByInventoryID}
+module.exports = {
+  getClassifications,
+  getInventoryByClassificationId,
+  getInventoryByInventoryID,
+  addNewClassification
+}

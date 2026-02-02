@@ -22,7 +22,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 /* ***************************
  *  Build inventory by detail view
  * ************************** */
-invCont.buildByInventoryId = async function (req, res, next){
+invCont.buildByInventoryId = async function (req, res, next) {
   const inventory_id = req.params.inventoryId;
   const data = await invModel.getInventoryByInventoryID(inventory_id);
   const detail = await utilities.buildDetailView(data);
@@ -38,11 +38,58 @@ invCont.buildByInventoryId = async function (req, res, next){
 /* ***************************
  *  Temporal Error View
  * ************************** */
-invCont.generateError = async function (req, res,next){
+invCont.generateError = async function (req, res, next) {
   const error = new Error("A temporal Error!");
   error.status = 500;
   next(error);
 }
 
+/* ***************************
+ *  Management View
+ * ************************** */
+invCont.buildManagementInv = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const title = "Vehicle Management";
+  res.render("./inventory/management", {nav,title});
+}
+
+/* ***************************
+ *  Add Classification View
+ * ************************** */
+invCont.buildAddClassification = async function (req, res, next){
+  let nav = await utilities.getNav();
+  const title = "Add Classification";
+  res.render("./inventory/add-classification", {nav,title,errors: null})
+}
+
+/* ***************************
+ *  Process the adding classification
+ * ************************** */
+invCont.processAddClassification = async function (req, res, next){
+  let nav = await utilities.getNav();
+  const title = "Add Classification";
+  const { classification_name } = req.body;
+  const regResult = await invModel.addNewClassification(classification_name);
+  if (regResult){
+    req.flash(
+      "notice",
+      `The ${classification_name} was successfully registered.`
+    )
+    res.status(201).render("inventory/management", {
+      title,
+      nav,
+      errors: null,
+    })
+  } else{
+    req.flash(
+      "notice",
+      "Sorry, the adding classification failed."
+    );
+    res.status(501).render("inventory/add-classification", {
+      title,
+      nav,
+    })
+  }
+}
 
 module.exports = invCont

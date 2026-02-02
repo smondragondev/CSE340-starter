@@ -120,6 +120,73 @@ main {
   min-height: 90dvh;
 }
 
+/* Forms */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    gap: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    padding: 30px 50px;
+}
+
+.form button {
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 10px;
+    border-radius: 10px;
+    border: var(--primary-color);
+}
+
+.form button:hover{
+  background-color: var(--secondary-color);
+  border: var(--secondary-color);
+  cursor: pointer;
+}
+
+.form p {
+    text-align: center;
+}
+
+.form .hint{
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"]{
+    height: 40px;
+    padding: 5px 10px;
+}
+
+input:valid{
+  border-color: green;
+}
+
+input:invalid{
+  border-color: red;
+}
+
+.notice{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  border: 3px solid var(--primary-color);
+  border-radius: 10px;
+  padding: 30px;
+  width: 40%;
+  margin: 0px auto 20px auto;
+  background-color: var(--primary-color);
+  color: var(--background-color);
+}
 
 /* Footer */
 

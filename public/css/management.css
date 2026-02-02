@@ -1,0 +1,10 @@
+.management-options{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+    font-weight: 500;
+}
+.management-options a{    
+    font-size: 20px;
+}
