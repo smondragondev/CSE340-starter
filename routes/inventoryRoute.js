@@ -23,5 +23,13 @@ router.post(
     regValidate.checkRegData,
     utilities.handleErrors(invController.processAddClassification)
 )
-
+// Add Inventory Get
+router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+// Add Inventory
+router.post(
+    "/add-inventory", 
+    regValidate.addInventoryRules(),
+    regValidate.checkAddInventoryData,
+    utilities.handleErrors(invController.processAddInventory)
+)
 module.exports = router;

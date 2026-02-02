@@ -159,18 +159,24 @@ main {
   margin-bottom: 10px;
 }
 
+select,
 input[type="text"],
 input[type="email"],
+input[type="number"],
 input[type="password"]{
     height: 40px;
     padding: 5px 10px;
 }
 
-input:valid{
+textarea{
+  padding: 5px 10px;
+}
+
+select:valid,textarea:valid,input:valid{
   border-color: green;
 }
 
-input:invalid{
+select:invalid,textarea:invalid,input:invalid{
   border-color: red;
 }
 
