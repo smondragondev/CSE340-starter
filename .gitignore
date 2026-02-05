@@ -15,4 +15,6 @@ node_modules
 # .DS_Store is only for Mac users
 **/.DS_Store
 
+*.zip
+accounts.txt
 README.md

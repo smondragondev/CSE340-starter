@@ -6,6 +6,7 @@
  * Require Statements
  *************************/
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const expressLayouts = require("express-ejs-layouts");
 const baseController = require("./controllers/baseController");
 const inventoryRoute = require("./routes/inventoryRoute");
@@ -40,6 +41,9 @@ app.use(function(req, res, next){
   res.locals.messages = require('express-messages')(req, res)
   next()
 })
+app.use(cookieParser());
+app.use(utilities.checkJWTToken);
+
 
 /* ***********************
  * View Engine and Templates
