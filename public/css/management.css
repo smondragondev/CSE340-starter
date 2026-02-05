@@ -8,3 +8,29 @@
 .management-options a{    
     font-size: 20px;
 }
+
+#inventory-management{
+    padding: 20px 0px;
+}
+
+#inventory-management h2{
+    margin-bottom: 10px;
+}
+
+#inventoryDisplay{
+    margin-top: 20px;
+    border: 1px solid var(--primary-color);
+}
+
+#inventoryDisplay thead{
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#inventoryDisplay th{
+    padding: 10px;
+}
+
+#inventoryDisplay td{
+    padding: 10px;
+}

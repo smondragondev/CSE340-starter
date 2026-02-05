@@ -150,6 +150,11 @@ main {
   cursor: pointer;
 }
 
+.form button:disabled{
+  background-color: var(--text3-color);
+  cursor: not-allowed;
+}
+
 .form p {
     text-align: center;
 }
@@ -179,6 +184,8 @@ select:valid,textarea:valid,input:valid{
 select:invalid,textarea:invalid,input:invalid{
   border-color: red;
 }
+
+
 
 .notice{
   display: flex;
