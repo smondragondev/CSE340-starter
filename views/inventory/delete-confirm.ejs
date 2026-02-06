@@ -1,0 +1,61 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+<form class="form" id="deleteInventoryForm" action="/inv/delete" method="post">
+    <p>Confirm Deletion - The delete is permanent.</p>
+    <label for="inv_make">
+        Make:
+    </label>
+    <input type="text" name="inv_make" 
+    id="inv_make" 
+    placeholder="Enter a make"
+    pattern="^[a-zA-Z0-9]+$"
+    value="<%= locals.inv_make %>"
+    readonly>
+    <span class="hint">Make must contain only letters and numbers (no spaces or special characters).</span>
+    <label for="inv_model">
+        Model:
+    </label>
+    <input type="text" name="inv_model" 
+    id="inv_model" 
+    placeholder="Enter a model"
+    pattern="^[a-zA-Z0-9]+$"
+    value="<%= locals.inv_model %>"
+    readonly>
+    <span class="hint">Model must contain only letters and numbers (no spaces or special characters).</span>
+    <label for="inv_year">
+        Year:
+    </label>
+    <input type="number" name="inv_year" 
+    id="inv_year" 
+    min="1980"
+    step="1"
+    placeholder="Enter a year"
+    value="<%= locals.inv_year %>"
+    readonly>     
+    <label for="inv_price">
+        Price:
+    </label>
+    <input type="number" name="inv_price" 
+    id="inv_price" 
+    min="0.1"
+    step="0.1"
+    placeholder="Enter a price"
+    value="<%= locals.inv_price %>"
+    readonly>     
+    <button>Delete Inventory</button>
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>    
+</form>

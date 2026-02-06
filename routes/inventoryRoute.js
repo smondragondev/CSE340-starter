@@ -42,4 +42,9 @@ router.post(
     regValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory));
 
+// This will display a confirmation view 
+router.get("/delete/:inventory_id", utilities.handleErrors(invController.buildConfirmationView))
+// This will delete the iventory item
+router.post("/delete", utilities.handleErrors(invController.deleteInventoryItem))
+
 module.exports = router;

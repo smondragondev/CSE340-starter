@@ -72,15 +72,13 @@ invCont.processAddClassification = async function (req, res, next) {
   const { classification_name } = req.body;
   const regResult = await invModel.addNewClassification(classification_name);
   if (regResult) {
+    const classificationOptions = await utilities.buildClassificationOptions();
     req.flash(
       "notice",
       `The ${classification_name} was successfully registered.`
     )
-    res.status(201).render("inventory/management", {
-      title,
-      nav,
-      errors: null,
-    })
+    
+    res.redirect("/inv/");
   } else {
     req.flash(
       "notice",
@@ -138,11 +136,7 @@ invCont.processAddInventory = async function (req, res, next) {
       "notice",
       `The ${inv_make} - ${inv_model} was successfully registered.`
     )
-    res.status(201).render("inventory/management", {
-      title,
-      nav,
-      errors: null,
-    })
+    res.redirect("/inv/");
   } else {
     const classificationOptions = await utilities.buildClassificationOptions(classification_id);
     req.flash(
@@ -239,12 +233,8 @@ invCont.updateInventory = async function (req, res, next) {
       "notice",
       `The ${inv_make} - ${inv_model} was successfully updated.`
     )
-    res.status(201).render("inventory/management", {
-      title,
-      nav,
-      errors: null,
-      classificationOptions,
-    })
+    
+    res.redirect("/inv/");
   } else {
     req.flash(
       "notice",
@@ -268,5 +258,69 @@ invCont.updateInventory = async function (req, res, next) {
     })
   }
 }
+
+/* ***************************
+ *  Build  confirmation inventory item
+ * ************************** 
+ * */
+invCont.buildConfirmationView = async function (req, res, next) {
+  const inv_id = parseInt(req.params.inventory_id);
+  let nav = await utilities.getNav();
+  const itemData = await invModel.getInventoryByInventoryID(inv_id);  
+  const itemName = `${itemData.inv_make} ${itemData.inv_model}`
+  const title = "Delete " + itemName;
+  res.render("./inventory/delete-confirm", {
+    title,
+    nav,
+    errors: null,
+    inv_id: itemData.inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,    
+    inv_price: itemData.inv_price,
+  })
+}
+
+/*
+ ****************************
+ *  Process the deleting inventory
+ * ************************** */
+invCont.deleteInventoryItem = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const title = "Delete Inventory";
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_price,
+  } = req.body;
+  const deleteResult = await invModel.deleteInventoryItem(
+    inv_id,
+  );
+  if (deleteResult) {
+    const classificationOptions = await utilities.buildClassificationOptions();
+    req.flash(
+      "notice",
+      `The ${inv_make} - ${inv_model} was successfully updated.`
+    )    
+    res.redirect("/inv/");
+  } else {
+    req.flash(
+      "notice",
+      "Sorry, the edot inventory failed."
+    );
+    res.status(501).render("inventory/delete-confirmation", {
+      title,
+      nav,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_price,
+    })
+  }
+}
+
 
 module.exports = invCont
