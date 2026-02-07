@@ -48,7 +48,6 @@ validate.addInventoryRules = () => {
             .trim()
             .escape()
             .notEmpty()
-            .isAlphanumeric('en-US')
             .withMessage("Please provide a correct inventory description."),
         body("inv_image")
             .trim()
@@ -64,13 +63,13 @@ validate.addInventoryRules = () => {
             .trim()
             .escape()
             .notEmpty()
-            .isAlphanumeric('en-US')
+            .isFloat()
             .withMessage("Please provide a correct inventory price."),
         body("inv_miles")
             .trim()
             .escape()
             .notEmpty()
-            .isNumeric()
+            .isFloat()
             .withMessage("Please provide a correct inventory miles."),
         body("inv_color")
             .trim()
