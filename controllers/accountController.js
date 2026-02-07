@@ -119,4 +119,14 @@ accountController.accountLogin = async function (req, res){
     throw new Error('Access Forbidden');
   }
 }
+
+/* ****************************************
+ *  Process logout request
+ * ************************************ */
+accountController.accountLogout = async function (req, res){
+    const name = res.locals.accountData.account_firstname ?? '';
+    req.flash("notice", `Bye ${name}!. You are logout!`);
+    res.clearCookie("jwt");
+    res.redirect("/account/login")
+}
 module.exports = accountController

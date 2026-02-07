@@ -75,9 +75,21 @@ header span {
   font-weight: 700;
 }
 
+#tools {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 #tools a {
   font-weight: 700;
   color: white;
+  padding: 0 25px;
+}
+
+.welcome-message {
+  border-right: 2px solid white;
 }
 
 .navigation {

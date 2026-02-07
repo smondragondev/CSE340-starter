@@ -155,16 +155,16 @@ Util.checkJWTToken = (req, res, next) => {
    process.env.ACCESS_TOKEN_SECRET,
    function (err, accountData) {
     if (err) {
-     req.flash("Please log in")
-     res.clearCookie("jwt")
-     return res.redirect("/account/login")
+     req.flash("Please log in");
+     res.clearCookie("jwt");
+     return res.redirect("/account/login");
     }
-    res.locals.accountData = accountData
-    res.locals.loggedin = 1
-    next()
+    res.locals.accountData = accountData;
+    res.locals.loggedin = 1;
+    next();
    })
  } else {
-  next()
+  next();
  }
 }
 
@@ -176,6 +176,22 @@ Util.checkJWTToken = (req, res, next) => {
     next()
   } else {
     req.flash("notice", "Please log in.")
+    return res.redirect("/account/login")
+  }
+ }
+
+
+
+/* ****************************************
+ *  Check Permissions
+ * ************************************ */
+ Util.checkPermissions = (req, res, next) => {
+  const accountType = res.locals.accountData.account_type ?? '';
+  if ( accountType === 'Admin' || accountType === 'Employee') {
+    res.locals.canManage = 1;
+    next()
+  } else {
+    req.flash("notice", "You don't have the correct permissions.")
     return res.redirect("/account/login")
   }
  }
