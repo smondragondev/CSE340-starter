@@ -1,0 +1,44 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form class="form" id="editAccountForm" action="/account/edit" method="post">
+    <h2>Account Update</h2>
+    <label for="account_firstname">
+        First Name:
+    </label>
+    <input type="text" name="account_firstname" id="account_firstname" 
+    pattern="^[a-zA-Z]+$"
+    value="<%= locals.account_firstname %>"
+    required>
+    <span class="hint">First name must contain only letters.</span>
+    
+    <label for="account_lastname">
+        Last Name:
+    </label>
+    <input type="text" name="account_lastname" id="account_lastname" required
+    pattern="^[a-zA-Z]+$"
+    value="<%= locals.account_lastname %>">
+    <span class="hint">Last name must contain only letters.</span>    
+    <label for="account_email">
+        Email:
+    </label>
+    <input type="email" name="account_email" id="account_email" 
+    value="<%= locals.account_email %>" placeholder="Enter a valid email address"
+    required>
+    <button>Update Account</button>
+    <input type="hidden" name="account_id"
+    <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+    <% } %>>    
+</form>

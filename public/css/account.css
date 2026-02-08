@@ -1,3 +1,18 @@
+/* Account Management */
+.account-welcome {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.inventory-management {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Account form */
 .pwd-input {
     display: grid;
     grid-template-columns: 1fr 100px;
@@ -10,6 +25,6 @@
     border-radius: 10px;
 }
 
-.password-hint{
+.password-hint {
     font-size: 12px;
 }

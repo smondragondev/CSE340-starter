@@ -149,51 +149,53 @@ Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)
 * Middleware to check token validity
 **************************************** */
 Util.checkJWTToken = (req, res, next) => {
- if (req.cookies.jwt) {
-  jwt.verify(
-   req.cookies.jwt,
-   process.env.ACCESS_TOKEN_SECRET,
-   function (err, accountData) {
-    if (err) {
-     req.flash("Please log in");
-     res.clearCookie("jwt");
-     return res.redirect("/account/login");
-    }
-    res.locals.accountData = accountData;
-    res.locals.loggedin = 1;
+  if (req.cookies.jwt) {
+    jwt.verify(
+      req.cookies.jwt,
+      process.env.ACCESS_TOKEN_SECRET,
+      function (err, accountData) {
+        if (err) {
+          req.flash("Please log in");
+          res.clearCookie("jwt");
+          return res.redirect("/account/login");
+        }
+        res.locals.accountData = accountData;
+        const accountType = accountData.account_type ?? '';
+        if (accountType === 'Admin' || accountType === 'Employee') {
+          res.locals.canManage = 1;
+        }
+        res.locals.loggedin = 1;
+        next();
+      })
+  } else {
     next();
-   })
- } else {
-  next();
- }
+  }
 }
 
 /* ****************************************
  *  Check Login
  * ************************************ */
- Util.checkLogin = (req, res, next) => {
+Util.checkLogin = (req, res, next) => {
   if (res.locals.loggedin) {
     next()
   } else {
     req.flash("notice", "Please log in.")
     return res.redirect("/account/login")
   }
- }
+}
 
 
 
 /* ****************************************
  *  Check Permissions
  * ************************************ */
- Util.checkPermissions = (req, res, next) => {
-  const accountType = res.locals.accountData.account_type ?? '';
-  if ( accountType === 'Admin' || accountType === 'Employee') {
-    res.locals.canManage = 1;
+Util.checkPermissions = (req, res, next) => {
+  if (accountType === 'Admin' || accountType === 'Employee') {    
     next()
   } else {
     req.flash("notice", "You don't have the correct permissions.")
     return res.redirect("/account/login")
   }
- }
+}
 
 module.exports = Util

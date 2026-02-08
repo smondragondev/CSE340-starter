@@ -72,12 +72,10 @@ invCont.processAddClassification = async function (req, res, next) {
   const { classification_name } = req.body;
   const regResult = await invModel.addNewClassification(classification_name);
   if (regResult) {
-    const classificationOptions = await utilities.buildClassificationOptions();
     req.flash(
       "notice",
       `The ${classification_name} was successfully registered.`
-    )
-    
+    );    
     res.redirect("/inv/");
   } else {
     req.flash(
@@ -87,7 +85,7 @@ invCont.processAddClassification = async function (req, res, next) {
     res.status(501).render("inventory/add-classification", {
       title,
       nav,
-    })
+    });
   }
 }
 
@@ -238,7 +236,7 @@ invCont.updateInventory = async function (req, res, next) {
   } else {
     req.flash(
       "notice",
-      "Sorry, the edot inventory failed."
+      "Sorry, the edit inventory failed."
     );
     res.status(501).render("inventory/edit-inventory", {
       title,
@@ -308,7 +306,7 @@ invCont.deleteInventoryItem = async function (req, res, next) {
   } else {
     req.flash(
       "notice",
-      "Sorry, the edot inventory failed."
+      "Sorry, the edit inventory failed."
     );
     res.status(501).render("inventory/delete-confirmation", {
       title,
