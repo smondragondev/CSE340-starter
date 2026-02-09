@@ -190,7 +190,8 @@ Util.checkLogin = (req, res, next) => {
  *  Check Permissions
  * ************************************ */
 Util.checkPermissions = (req, res, next) => {
-  if (accountType === 'Admin' || accountType === 'Employee') {    
+  
+  if (res.locals.canManage) {    
     next()
   } else {
     req.flash("notice", "You don't have the correct permissions.")
