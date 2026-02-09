@@ -14,7 +14,9 @@ validate.registationRules = () => {
             .trim()
             .escape()
             .notEmpty()
+            .withMessage("Please provide a first name.")
             .isAlpha()
+            .withMessage("First name can only contain letters.")
             .isLength({ min: 1 })
             .withMessage("Please provide a first name."), // on error this message is sent.
 
@@ -23,9 +25,11 @@ validate.registationRules = () => {
             .trim()
             .escape()
             .notEmpty()
+            .withMessage("Please provide a last name.")
             .isAlpha()
+            .withMessage("Last name can only contain letters.")
             .isLength({ min: 2 })
-            .withMessage("Please provide a last name."), // on error this message is sent.
+            .withMessage("Last name must be at least 2 characters."), // on error this message is sent.
 
         // valid email is required and cannot already exist in the DB
         body("account_email")
@@ -140,7 +144,9 @@ validate.updateRules = () => {
             .trim()
             .escape()
             .notEmpty()
+            .withMessage("Please provide a first name.")
             .isAlpha()
+            .withMessage("First name can only contain letters.")
             .isLength({ min: 1 })
             .withMessage("Please provide a first name."), // on error this message is sent.
 
@@ -149,9 +155,11 @@ validate.updateRules = () => {
             .trim()
             .escape()
             .notEmpty()
+            .withMessage("Please provide a last name.")
             .isAlpha()
+            .withMessage("Last name can only contain letters.")
             .isLength({ min: 2 })
-            .withMessage("Please provide a last name."), // on error this message is sent.
+            .withMessage("Last name must be at least 2 characters."), // on error this message is sent.
 
         // valid email is required and cannot already exist in the DB
         body("account_email")
@@ -161,14 +169,14 @@ validate.updateRules = () => {
             .isEmail()
             .normalizeEmail() // refer to validator.js docs
             .withMessage("A valid email is required.")
-            .custom(async (account_email, {req}) => {
+            .custom(async (account_email, { req }) => {
                 const accountData = await accountModel.getAccountByEmail(account_email);
                 if (!accountData)
                     return true;
                 if (parseInt(req.body.account_id) === accountData.account_id)
                     return true;
                 throw new Error("Email exists. Please use different email")
-                
+
             }),
     ]
 }
@@ -199,4 +207,49 @@ validate.checkUpdateData = async (req, res, next) => {
     next()
 }
 
+/*  **********************************
+  *  Update password Validation Rules
+  * ********************************* */
+validate.updatePasswordRules = () => {
+    return [
+        // password is required and must be strong password
+        body("account_password")
+            .trim()
+            .notEmpty()
+            .isStrongPassword({
+                minLength: 12,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
+            })
+            .withMessage("Password does not meet requirements."),
+    ]
+}
+/* ******************************
+* Check update password data and return errors or continue to edit account
+* ***************************** */
+validate.checkUpdatePasswordData = async (req, res, next) => {
+    const {
+        account_password,
+        account_id } = req.body;
+    const accountData = await accountModel.getAccountById(account_id);
+    const { account_firstname, account_lastname, account_email } = accountData;
+    let errors = [];
+    errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav();
+        res.render("account/edit-account", {
+            errors,
+            title: "Edit Account",
+            nav,
+            account_firstname,
+            account_lastname,
+            account_email,
+            account_id
+        });
+        return
+    }
+    next()
+}
 module.exports = validate

@@ -33,4 +33,12 @@ router.post("/edit/",
   regValidate.checkUpdateData,
   utilities.handleErrors(accountController.processUpdateAccount));
 
+// Process the update password
+router.post("/update-password/", 
+  utilities.checkLogin, 
+  regValidate.updatePasswordRules(),
+  regValidate.checkUpdatePasswordData,
+  utilities.handleErrors(accountController.processUpdatePassword));
+
+
 module.exports = router;

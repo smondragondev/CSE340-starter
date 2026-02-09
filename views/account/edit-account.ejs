@@ -42,3 +42,24 @@
     <% if(locals.account_id) { %> value="<%= locals.account_id %>"
     <% } %>>    
 </form>
+
+<form class="form" action="/account/update-password" method="post">
+    <h2>Update Passsword</h2>    
+    <label for="account_password">
+        Password:
+    </label>
+    <span class="password-hint">
+        Passwords must be at least 12 characters and contain at least 1 number, 1 capital letter and 1 special character</span> 
+    <div class="pwd-input">
+        <input type="password" name="account_password" 
+        minlength="12" 
+        id="account_password"
+        pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
+        required>
+        <button id="pswdBtn" type="button">Show</button>        
+    </div>
+    <input type="hidden" name="account_id"
+    <% if(locals.account_id) { %> value="<%= locals.account_id %>"
+    <% } %>>    
+    <button>Update Password</button>
+</form>

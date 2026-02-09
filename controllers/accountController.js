@@ -148,8 +148,6 @@ accountController.buildEditAccount = async function (req, res) {
     )
 }
 accountController.processUpdateAccount = async function (req, res) {
-    let nav = await utilities.getNav();
-    const title = "Edit Account";
     const {
         account_firstname,
         account_lastname,
@@ -167,20 +165,45 @@ accountController.processUpdateAccount = async function (req, res) {
             "notice",
             `Your data was successfully updated.`
         )
-        res.redirect(`/account/edit/${account_id}`);
+        res.redirect(`/account/`);
     } else {
         req.flash(
             "notice",
             "Sorry, the edit account failed."
         );
-        res.status(501).render("/account/edit-account", {
-            title,
-            nav,
-            account_firstname,
-            account_lastname,
-            account_email,
-            account_id
-        })
+        res.redirect(`/account/edit/${account_id}`)
+    }
+}
+
+accountController.processUpdatePassword = async function (req, res) {
+    const {
+        account_password,
+        account_id
+    } = req.body;
+    let hashedPassword
+    try {
+        // regular password and cost (salt is generated automatically)
+        hashedPassword = await bcrypt.hashSync(account_password, 10);
+    } catch (error) {
+        req.flash("notice", 'Sorry, there was an error processing the registration.');
+        res.redirect(`/account/edit/${account_id}`);
+    }
+    const updateResult = await accountModel.updatePassword(
+        hashedPassword,
+        account_id
+    );
+    if (updateResult) {
+        req.flash(
+            "notice",
+            `Your password was successfully updated.`
+        )
+        res.redirect(`/account/`);
+    } else {
+        req.flash(
+            "notice",
+            "Sorry, the update password failed."
+        );
+        res.redirect(`/account/edit/${account_id}`)
     }
 }
 
