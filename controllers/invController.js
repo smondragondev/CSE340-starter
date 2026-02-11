@@ -1,5 +1,6 @@
-const invModel = require("../models/inventory-model")
-const utilities = require("../utilities/")
+const invModel = require("../models/inventory-model");
+const appointmentModel = require("../models/appointment-model");
+const utilities = require("../utilities/");
 
 const invCont = {}
 
@@ -75,7 +76,7 @@ invCont.processAddClassification = async function (req, res, next) {
     req.flash(
       "notice",
       `The ${classification_name} was successfully registered.`
-    );    
+    );
     res.redirect("/inv/");
   } else {
     req.flash(
@@ -231,7 +232,7 @@ invCont.updateInventory = async function (req, res, next) {
       "notice",
       `The ${inv_make} - ${inv_model} was successfully updated.`
     )
-    
+
     res.redirect("/inv/");
   } else {
     req.flash(
@@ -264,7 +265,7 @@ invCont.updateInventory = async function (req, res, next) {
 invCont.buildConfirmationView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inventory_id);
   let nav = await utilities.getNav();
-  const itemData = await invModel.getInventoryByInventoryID(inv_id);  
+  const itemData = await invModel.getInventoryByInventoryID(inv_id);
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
   const title = "Delete " + itemName;
   res.render("./inventory/delete-confirm", {
@@ -274,7 +275,7 @@ invCont.buildConfirmationView = async function (req, res, next) {
     inv_id: itemData.inv_id,
     inv_make: itemData.inv_make,
     inv_model: itemData.inv_model,
-    inv_year: itemData.inv_year,    
+    inv_year: itemData.inv_year,
     inv_price: itemData.inv_price,
   })
 }
@@ -297,16 +298,15 @@ invCont.deleteInventoryItem = async function (req, res, next) {
     inv_id,
   );
   if (deleteResult) {
-    const classificationOptions = await utilities.buildClassificationOptions();
     req.flash(
       "notice",
-      `The ${inv_make} - ${inv_model} was successfully updated.`
-    )    
+      `The ${inv_make} - ${inv_model} was successfully deleted.`
+    )
     res.redirect("/inv/");
   } else {
     req.flash(
       "notice",
-      "Sorry, the edit inventory failed."
+      "Sorry, the delete inventory failed."
     );
     res.status(501).render("inventory/delete-confirmation", {
       title,
@@ -319,6 +319,60 @@ invCont.deleteInventoryItem = async function (req, res, next) {
     })
   }
 }
+
+/* ***************************
+ *  Book an appointment View
+ * ************************** */
+invCont.buildBookAppointment = async function (req, res, next) {
+  const nav = await utilities.getNav();
+  const title = "Book an appointment";
+  const inv_id = req.params.inv_id;
+  const appointment_email = res.locals.accountData.account_email;
+  res.render("./inventory/appointment", { nav, title, errors: null,inv_id,appointment_email })
+}
+
+/* ****************************
+ *  Process the book appointment
+ * ************************** */
+invCont.processBookAppointment = async function (req, res, next) {
+  let nav = await utilities.getNav();
+  const title = "Book an appointment";
+  const {
+    appointment_email,
+    appointment_phone_number,
+    appointment_message,
+    inv_id
+  } = req.body;
+  const account_id = res.locals.accountData.account_id ?? '';
+  const registerResult = await appointmentModel.registerAppointment(
+    account_id,
+    inv_id,
+    appointment_phone_number,
+    appointment_email,
+    appointment_message
+  );
+  if (registerResult) {
+    req.flash(
+      "notice",
+      `The appoint was successfully register.`
+    )
+    res.redirect("/");
+  } else {
+    req.flash(
+      "notice",
+      "Sorry, the book an appointment failed."
+    );
+    res.status(501).render("inventory/appointment", {
+      title,
+      nav,
+      appointment_email,
+      appointment_phone_number,
+      appointment_message,
+      inv_id
+    })
+  }
+}
+
 
 
 module.exports = invCont

@@ -64,6 +64,7 @@ Util.buildClassificationGrid = async function (data) {
 Util.buildDetailView = async function (data) {
   let detail;
   if (data) {
+    const id = data.inv_id;
     const title = `${data.inv_make} ${data.inv_model}`;
     const fullImageUrl = data.inv_image;
     const altImage = `${title} on CSE Motors`
@@ -99,7 +100,7 @@ Util.buildDetailView = async function (data) {
                 </p>
             </div>
           </div>
-          <a class="request-view">Request Private Viewing</a>
+          <a class="request-view" href="/inv/book-appointment/${id}">Request Private Viewing</a>
       </div>
     `
   } else {

@@ -1,0 +1,39 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%- messages() %>
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+<form class="form" id="bookAppointmentForm" action="/inv/book-appointment" method="post">
+    <label for="appointment_email">
+        Email:
+    </label>
+    <input type="email" name="appointment_email" id="appointment_email" 
+    value="<%= locals.appointment_email %>" placeholder="Enter a valid email address"
+    required>
+    <label for="appointment_phone_number">
+        Phone Number:
+    </label>
+    <input type="tel" name="appointment_phone_number" id="appointment_phone_number" 
+    value="<%= locals.appointment_phone_number %>" placeholder="Enter a valid phone number"
+    required>
+    <label for="appointment_message">
+        Message:
+    </label>
+    <textarea name="appointment_message" 
+    id="appointment_message" 
+    placeholder="Enter a message"
+    required><%= locals.appointment_message %></textarea>
+    <button>Book Appointment</button>
+    <input type="hidden" name="inv_id"
+    <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+    <% } %>>   
+</form>

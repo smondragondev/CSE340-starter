@@ -195,4 +195,59 @@ validate.checkUpdateData = async (req, res, next) => {
 }
 
 
+/*  **********************************
+  *  Book Appointment Data Validation Rules
+  * ********************************* */
+validate.bookAppointmentRules = () => {
+    return [
+        // valid email is required
+        body("appointment_email")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isEmail()
+            .normalizeEmail() // refer to validator.js docs
+            .withMessage("A valid email is required."),
+        body("appointment_phone_number")
+            .trim()
+            .escape()
+            .notEmpty()
+            .isMobilePhone()
+            .withMessage("A valid phone number is required."),
+        body("appointment_message")
+            .trim()
+            .escape()
+            .notEmpty()
+            .withMessage("Please provide a correct appointment message."),    
+    ]
+}
+
+/* ******************************
+* Check Appointment data and return errors or continue to Book the appointment
+* ***************************** */
+validate.checkAppointmentData = async (req, res, next) => {
+    const { 
+        appointment_email,
+        appointment_phone_number,
+        appointment_message,
+        inv_id
+    } = req.body;
+    let errors = []
+    errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        let nav = await utilities.getNav();          
+        res.render("inventory/appointment", {
+            errors,
+            title: "Book an appointment",
+            nav,
+            appointment_email,
+            appointment_phone_number,
+            appointment_message,
+            inv_id
+        })
+        return
+    }
+    next()
+}
+
 module.exports = validate;

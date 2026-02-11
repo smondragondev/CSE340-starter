@@ -181,6 +181,7 @@ select,
 input[type="text"],
 input[type="email"],
 input[type="number"],
+input[type="tel"],
 input[type="password"] {
   height: 40px;
   padding: 5px 10px;
@@ -208,11 +209,11 @@ input:invalid {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  justify-content: center;
+  justify-content: end;
   border: 3px solid var(--primary-color);
   border-radius: 10px;
   padding: 30px;
-  width: 40%;
+  width: 80%;
   margin: 0px auto 20px auto;
   background-color: var(--primary-color);
   color: var(--background-color);
@@ -283,5 +284,8 @@ footer a {
     padding-right: 30px;
   }
 
+  .notice{
+    width: 40%;
+  }
 
 }

@@ -12,10 +12,12 @@ async function registerAppointment(
                 INSERT INTO public.appointment(
                     account_id, inv_id, appointment_phone_number,
                     appointment_email, appointment_message)
-                    VALUES ($1, $2, $3, $4, $5);
+                    VALUES ($1, $2, $3, $4, $5)
+                    RETURNING *
             `;
             return await pool.query(sql,
-                [account_id,
+                [   
+                    account_id,
                     inv_id,
                     appointment_phone_number,
                     appointment_email,
@@ -23,6 +25,7 @@ async function registerAppointment(
                 ]
             )
         } catch (error){
+            console.log(error);
             return error.message;
         }
 }

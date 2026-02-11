@@ -53,4 +53,16 @@ router.get("/delete/:inventory_id", utilities.checkLogin, utilities.checkPermiss
 // This will delete the iventory item
 router.post("/delete", utilities.checkLogin, utilities.checkPermissions, utilities.handleErrors(invController.deleteInventoryItem))
 
+// The Render View for appointment form
+router.get("/book-appointment/:inv_id",
+    utilities.checkLogin, 
+    utilities.handleErrors(invController.buildBookAppointment))
+// The Post view to process the book appointment process
+router.post("/book-appointment",
+    utilities.checkLogin,
+    regValidate.bookAppointmentRules(),
+    regValidate.checkAppointmentData,
+    utilities.handleErrors(invController.processBookAppointment)
+)
+
 module.exports = router;
