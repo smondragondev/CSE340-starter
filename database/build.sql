@@ -240,3 +240,28 @@ WHERE inv_id = 10;
 UPDATE inventory
 SET inv_image = REPLACE(inv_image, '/images', '/images/vehicles'),
   inv_thumbnail = REPLACE(inv_thumbnail, '/images', '/images/vehicles');
+
+--
+CREATE TABLE public.appointment
+(
+    appointment_id serial NOT NULL,
+    account_id integer NOT NULL,
+    inv_id integer NOT NULL,
+    appointment_phone_number character varying(15) NOT NULL,
+    appointment_email character varying NOT NULL,
+    appointment_message text NOT NULL,
+    PRIMARY KEY (appointment_id),
+    CONSTRAINT fk_account FOREIGN KEY (account_id)
+        REFERENCES public.account (account_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT fk_inventory FOREIGN KEY (inv_id)
+        REFERENCES public.inventory (inv_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID
+);
+
+ALTER TABLE IF EXISTS public.appointment
+    OWNER to cse340;

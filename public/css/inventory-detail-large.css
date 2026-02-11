@@ -46,4 +46,7 @@
     .detail-info-description{
         margin-bottom: 20px;
     }
+    .request-view{
+        grid-column: 1 / -1;
+    }
 }

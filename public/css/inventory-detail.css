@@ -17,8 +17,6 @@
     flex-direction: row;
     align-items: center;
     gap: 10px;
-
-
 }
 
 .detail-info-header-mobile p {
@@ -46,4 +44,22 @@
 .detail-info-technical ul span {
     color: var(--primary-color);
     font-weight: 700;
+}
+
+.request-view{
+    text-align: center;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+
+.request-view:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
 }

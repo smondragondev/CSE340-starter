@@ -1,4 +1,3 @@
-const { check } = require('express-validator');
 const pool = require('../database/');
 
 /* *****************************

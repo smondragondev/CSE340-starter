@@ -99,6 +99,7 @@ Util.buildDetailView = async function (data) {
                 </p>
             </div>
           </div>
+          <a class="request-view">Request Private Viewing</a>
       </div>
     `
   } else {
