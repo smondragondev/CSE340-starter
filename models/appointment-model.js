@@ -25,7 +25,6 @@ async function registerAppointment(
                 ]
             )
         } catch (error){
-            console.log(error);
             return error.message;
         }
 }
