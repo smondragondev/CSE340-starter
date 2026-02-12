@@ -132,6 +132,13 @@ accountController.accountLogout = async function (req, res) {
 
 accountController.buildEditAccount = async function (req, res) {
     const account_id = req.params.account_id;
+    if (parseInt(res.locals.accountData.account_id) !== parseInt(account_id)) {
+        req.flash(
+            "notice",
+            "Sorry, You can't edit data from other user."
+        );
+        return res.redirect(`/account/`)
+    }
     const accountData = await accountModel.getAccountById(account_id);
     const nav = await utilities.getNav();
     res.render(
@@ -154,6 +161,13 @@ accountController.processUpdateAccount = async function (req, res) {
         account_email,
         account_id
     } = req.body;
+    if (parseInt(res.locals.accountData.account_id) !== parseInt(account_id)) {
+        req.flash(
+            "notice",
+            "Sorry, You can't edit data from other user."
+        );
+        return res.redirect(`/account/edit/${account_id}`)
+    }
     const updateResult = await accountModel.updateAccount(
         account_firstname,
         account_lastname,
@@ -180,6 +194,13 @@ accountController.processUpdatePassword = async function (req, res) {
         account_password,
         account_id
     } = req.body;
+    if (parseInt(res.locals.accountData.account_id) !== parseInt(account_id)) {
+        req.flash(
+            "notice",
+            "Sorry, You can't edit data from other user."
+        );
+        return res.redirect(`/account/edit/${account_id}`)
+    }
     let hashedPassword
     try {
         // regular password and cost (salt is generated automatically)
